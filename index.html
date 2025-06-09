@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WriteQuest - Киберпанк текстовый редактор</title>
+
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/animations.css" />
+  </head>
+  <body>
+    <div class="app-container">
+      <div class="left-panel">
+        <div class="user-profile">
+          <div class="avatar">
+            🤖
+            <div class="level-badge" id="levelBadge">1</div>
+          </div>
+          <div class="username">CYBER_WRITER</div>
+          <div class="user-title" id="userTitle">ROOKIE HACKER</div>
+        </div>
+
+        <div class="stats-section">
+          <div class="stats-title">>>> SYSTEM STATUS</div>
+          <div class="stat-item">
+            <div class="stat-label">DAILY_WORDS_COUNT</div>
+            <div class="stat-value" id="todayWords">0</div>
+            <div class="progress-bar">
+              <div
+                class="progress-fill"
+                id="dailyProgress"
+                style="width: 0%"
+              ></div>
+            </div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">TOTAL_DATA_WRITTEN</div>
+            <div class="stat-value" id="totalWords">0</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">EXPERIENCE_POINTS</div>
+            <div class="stat-value" id="userXP">0</div>
+            <div class="progress-bar">
+              <div
+                class="progress-fill"
+                id="xpProgress"
+                style="width: 0%"
+              ></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="achievements-section">
+          <div class="stats-title">>>> ACHIEVEMENTS</div>
+          <div class="achievements" id="achievements"></div>
+        </div>
+      </div>
+
+      <div class="editor-section">
+        <div class="toolbar">
+          <div class="toolbar-group">
+            <button data-command="bold" class="tooltip" title="[BOLD_FORMAT]">
+              <strong>B</strong>
+              <div class="tooltip-content">[BOLD_FORMAT] CTRL+B</div>
+            </button>
+            <button
+              data-command="italic"
+              class="tooltip"
+              title="[ITALIC_FORMAT]"
+            >
+              <em>I</em>
+              <div class="tooltip-content">[ITALIC_FORMAT] CTRL+I</div>
+            </button>
+            <button
+              data-command="underline"
+              class="tooltip"
+              title="[UNDERLINE_FORMAT]"
+            >
+              <u>U</u>
+              <div class="tooltip-content">[UNDERLINE_FORMAT] CTRL+U</div>
+            </button>
+          </div>
+          <div class="toolbar-group">
+            <button
+              data-command="undo"
+              class="tooltip"
+              title="[UNDO_OPERATION]"
+            >
+              ↶
+              <div class="tooltip-content">[UNDO_OPERATION] CTRL+Z</div>
+            </button>
+            <button
+              data-command="redo"
+              class="tooltip"
+              title="[REDO_OPERATION]"
+            >
+              ↷
+              <div class="tooltip-content">[REDO_OPERATION] CTRL+Y</div>
+            </button>
+          </div>
+          <div class="toolbar-group">
+            <button data-command="clear" class="tooltip" title="[CLEAR_FORMAT]">
+              ⚡
+              <div class="tooltip-content">[CLEAR_FORMAT]</div>
+            </button>
+          </div>
+          <div class="toolbar-group">
+            <button
+              data-command="ai-complete"
+              class="ai-button tooltip"
+              title="[AI_AUTOCOMPLETE]"
+            >
+              🔮 AI.EXE
+              <div class="tooltip-content">[AI_AUTOCOMPLETE]</div>
+            </button>
+            <button
+              data-command="ai-improve"
+              class="ai-button tooltip"
+              title="[AI_ENHANCE]"
+            >
+              ⚡ ENHANCE
+              <div class="tooltip-content">[AI_ENHANCE_TEXT]</div>
+            </button>
+          </div>
+        </div>
+
+        <div class="editor-area">
+          <div class="editor-content" contenteditable="true" id="editor"></div>
+          <div class="word-counter-floating">
+            <span>[WORDS]: <span id="wordCount">0</span></span>
+            <span>[CHARS]: <span id="charCount">0</span></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="right-panel">
+        <div class="daily-quests">
+          <div class="section-header">
+            <h3 class="section-title">>>> DAILY MISSIONS</h3>
+            <div class="quest-timer" id="questTimer">23:59:59</div>
+          </div>
+          <div id="questsList"></div>
+        </div>
+
+        <div class="ai-assistant">
+          <div class="section-header">
+            <h3 class="section-title">>>> AI NEURAL NET</h3>
+          </div>
+          <div class="sentiment-indicator">
+            <span class="sentiment-emoji" id="sentimentEmoji">🤖</span>
+            <span class="sentiment-label" id="sentimentLabel"
+              >ANALYZING TONE...</span
+            >
+          </div>
+          <div class="ai-suggestions" id="aiSuggestions">
+            <div class="ai-suggestion">💾 INITIALIZING STORY PROTOCOL...</div>
+            <div class="ai-suggestion">🔧 ENHANCE NARRATIVE STRUCTURE</div>
+            <div class="ai-suggestion">📡 ESTABLISH CHARACTER DIALOGUE</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="streak-indicator">
+      <span class="streak-fire">🔥</span>
+      <span class="streak-number" id="streakNumber">0</span>
+      <span class="streak-label">DAYS_STREAK</span>
+    </div>
+
+    <div class="modal" id="achievementModal">
+      <div class="modal-content">
+        <div class="modal-icon">🏆</div>
+        <h2 class="modal-title">ACHIEVEMENT UNLOCKED</h2>
+        <p class="modal-description" id="achievementDescription"></p>
+        <div class="modal-rewards">
+          <div class="reward-item">
+            <div class="reward-icon">⭐</div>
+            <div class="reward-label">
+              +<span id="achievementXP">100</span> EXP
+            </div>
+          </div>
+        </div>
+        <button
+          class="modal-button"
+          onclick="window.WriterQuest.app.closeAchievementModal()"
+        >
+          CONFIRM
+        </button>
+      </div>
+    </div>
+
+    <script src="js/core/EventEmitter.js"></script>
+    <script src="js/core/Command.js"></script>
+    <script src="js/core/Strategy.js"></script>
+
+    <script src="js/managers/CommandManager.js"></script>
+    <script src="js/managers/SelectionManager.js"></script>
+    <script src="js/managers/GameManager.js"></script>
+
+    <script src="js/ai/AutoComplete.js"></script>
+    <script src="js/ai/TextImprover.js"></script>
+    <script src="js/ai/SentimentAnalysis.js"></script>
+
+    <script src="js/ui/Toolbar.js"></script>
+    <script src="js/ui/StatusBar.js"></script>
+    <script src="js/ui/UIManager.js"></script>
+    <script src="js/ui/Modal.js"></script>
+
+    <script src="js/editor/Commands.js"></script>
+    <script src="js/editor/TextEditor.js"></script>
+
+    <script src="js/utils/Storage.js"></script>
+    <script src="js/utils/FileUtils.js"></script>
+
+    <script src="js/app.js"></script>
+  </body>
+</html>
