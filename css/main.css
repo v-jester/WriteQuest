@@ -1,5 +1,3 @@
-/* === ОСНОВНЫЕ СТИЛИ И ПЕРЕМЕННЫЕ === */
-
 * {
   margin: 0;
   padding: 0;
@@ -30,8 +28,6 @@ body {
   padding: 20px;
 }
 
-/* === ОСНОВНАЯ КОМПОНОВКА === */
-
 .app-container {
   background: white;
   border-radius: 20px;
@@ -44,16 +40,12 @@ body {
   overflow: hidden;
 }
 
-/* === ЛЕВАЯ ПАНЕЛЬ === */
-
 .left-panel {
   background: #f8fafc;
   border-right: 1px solid var(--border);
   padding: 20px;
   overflow-y: hidden;
 }
-
-/* === ЦЕНТРАЛЬНАЯ ОБЛАСТЬ === */
 
 .editor-section {
   display: flex;
@@ -84,16 +76,12 @@ body {
   font-style: italic;
 }
 
-/* === ПРАВАЯ ПАНЕЛЬ === */
-
 .right-panel {
   background: #f8fafc;
   border-left: 1px solid var(--border);
   padding: 20px;
   overflow-y: auto;
 }
-
-/* === АДАПТИВНОСТЬ === */
 
 @media (max-width: 1200px) {
   .app-container {
