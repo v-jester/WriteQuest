@@ -1,0 +1,118 @@
+/* === ОСНОВНЫЕ СТИЛИ И ПЕРЕМЕННЫЕ === */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary: #6366f1;
+  --primary-dark: #4f46e5;
+  --secondary: #8b5cf6;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --dark: #1f2937;
+  --light: #f3f4f6;
+  --text: #374151;
+  --border: #e5e7eb;
+  --shadow: rgba(0, 0, 0, 0.1);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* === ОСНОВНАЯ КОМПОНОВКА === */
+
+.app-container {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px var(--shadow);
+  width: 100%;
+  max-width: 1400px;
+  height: 90vh;
+  display: grid;
+  grid-template-columns: 250px 1fr 300px;
+  overflow: hidden;
+}
+
+/* === ЛЕВАЯ ПАНЕЛЬ === */
+
+.left-panel {
+  background: #f8fafc;
+  border-right: 1px solid var(--border);
+  padding: 20px;
+  overflow-y: hidden;
+}
+
+/* === ЦЕНТРАЛЬНАЯ ОБЛАСТЬ === */
+
+.editor-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.editor-area {
+  flex: 1;
+  padding: 40px;
+  overflow-y: auto;
+  background: white;
+  position: relative;
+}
+
+.editor-content {
+  max-width: 800px;
+  margin: 0 auto;
+  font-size: 18px;
+  line-height: 1.8;
+  color: var(--dark);
+  min-height: 100%;
+  outline: none;
+}
+
+.editor-content:empty:before {
+  content: "Начните писать свою историю...";
+  color: #9ca3af;
+  font-style: italic;
+}
+
+/* === ПРАВАЯ ПАНЕЛЬ === */
+
+.right-panel {
+  background: #f8fafc;
+  border-left: 1px solid var(--border);
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/* === АДАПТИВНОСТЬ === */
+
+@media (max-width: 1200px) {
+  .app-container {
+    grid-template-columns: 1fr;
+    height: auto;
+    min-height: 90vh;
+  }
+
+  .left-panel,
+  .right-panel {
+    display: none;
+  }
+
+  .editor-area {
+    padding: 20px;
+  }
+
+  .streak-indicator {
+    position: static;
+    margin-bottom: 20px;
+  }
+}
