@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>WriteQuest - Киберпанк текстовый редактор</title>
+    <title>WriterQuest - Киберпанк текстовый редактор</title>
 
     <link rel="stylesheet" href="css/main.css" />
     <link rel="stylesheet" href="css/components.css" />
@@ -35,143 +35,207 @@
             </div>
           </div>
           <div class="stat-item">
-            <div class="stat-label">TOTAL_DATA_WRITTEN</div>
+            <div class="stat-label">TOTAL_WORDS_WRITTEN</div>
             <div class="stat-value" id="totalWords">0</div>
           </div>
           <div class="stat-item">
-            <div class="stat-label">EXPERIENCE_POINTS</div>
-            <div class="stat-value" id="userXP">0</div>
+            <div class="stat-label">CURRENT_STREAK</div>
+            <div class="stat-value" id="currentStreak">0</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">XP_PROGRESS</div>
+            <div class="stat-value" id="xpProgress">0 / 1000 XP</div>
             <div class="progress-bar">
               <div
                 class="progress-fill"
-                id="xpProgress"
+                id="xpProgressBar"
                 style="width: 0%"
               ></div>
             </div>
           </div>
         </div>
 
-        <div class="achievements-section">
-          <div class="stats-title">>>> ACHIEVEMENTS</div>
-          <div class="achievements" id="achievements"></div>
-        </div>
-      </div>
-
-      <div class="editor-section">
-        <div class="toolbar">
-          <div class="toolbar-group">
-            <button data-command="bold" class="tooltip" title="[BOLD_FORMAT]">
-              <strong>B</strong>
-              <div class="tooltip-content">[BOLD_FORMAT] CTRL+B</div>
-            </button>
-            <button
-              data-command="italic"
-              class="tooltip"
-              title="[ITALIC_FORMAT]"
-            >
-              <em>I</em>
-              <div class="tooltip-content">[ITALIC_FORMAT] CTRL+I</div>
-            </button>
-            <button
-              data-command="underline"
-              class="tooltip"
-              title="[UNDERLINE_FORMAT]"
-            >
-              <u>U</u>
-              <div class="tooltip-content">[UNDERLINE_FORMAT] CTRL+U</div>
-            </button>
-          </div>
-          <div class="toolbar-group">
-            <button
-              data-command="undo"
-              class="tooltip"
-              title="[UNDO_OPERATION]"
-            >
-              ↶
-              <div class="tooltip-content">[UNDO_OPERATION] CTRL+Z</div>
-            </button>
-            <button
-              data-command="redo"
-              class="tooltip"
-              title="[REDO_OPERATION]"
-            >
-              ↷
-              <div class="tooltip-content">[REDO_OPERATION] CTRL+Y</div>
-            </button>
-          </div>
-          <div class="toolbar-group">
-            <button data-command="clear" class="tooltip" title="[CLEAR_FORMAT]">
-              ⚡
-              <div class="tooltip-content">[CLEAR_FORMAT]</div>
-            </button>
-          </div>
-          <div class="toolbar-group">
-            <button
-              data-command="ai-complete"
-              class="ai-button tooltip"
-              title="[AI_AUTOCOMPLETE]"
-            >
-              🔮 AI.EXE
-              <div class="tooltip-content">[AI_AUTOCOMPLETE]</div>
-            </button>
-            <button
-              data-command="ai-improve"
-              class="ai-button tooltip"
-              title="[AI_ENHANCE]"
-            >
-              ⚡ ENHANCE
-              <div class="tooltip-content">[AI_ENHANCE_TEXT]</div>
-            </button>
-          </div>
-        </div>
-
-        <div class="editor-area">
-          <div class="editor-content" contenteditable="true" id="editor"></div>
-          <div class="word-counter-floating">
-            <span>[WORDS]: <span id="wordCount">0</span></span>
-            <span>[CHARS]: <span id="charCount">0</span></span>
+        <div class="quests-section">
+          <div class="quests-title">>>> ACTIVE_QUESTS</div>
+          <div class="quest-list" id="questList">
+            <div class="quest-card loading">Loading quests...</div>
           </div>
         </div>
       </div>
 
-      <div class="right-panel">
-        <div class="daily-quests">
-          <div class="section-header">
-            <h3 class="section-title">>>> DAILY MISSIONS</h3>
-            <div class="quest-timer" id="questTimer">23:59:59</div>
-          </div>
-          <div id="questsList"></div>
+      <div class="main-content">
+        <div class="toolbar" id="toolbar">
+          <button class="tool-button" id="undoButton" title="Undo (Ctrl+Z)">
+            ↩️ UNDO
+          </button>
+          <button class="tool-button" id="redoButton" title="Redo (Ctrl+Y)">
+            ↪️ REDO
+          </button>
+          <button class="tool-button" id="saveButton" title="Save (Ctrl+S)">
+            💾 SAVE
+          </button>
+          <button class="tool-button" id="loadButton" title="Load (Ctrl+O)">
+            📂 LOAD
+          </button>
+          <div class="divider"></div>
+          <button
+            class="tool-button"
+            id="aiImproveButton"
+            title="Improve Text (Ctrl+I)"
+          >
+            ✨ AI_IMPROVE
+          </button>
+          <button
+            class="tool-button"
+            id="aiCompleteButton"
+            title="Autocomplete (Ctrl+Space)"
+          >
+            🧠 AI_COMPLETE
+          </button>
+          <button
+            class="tool-button"
+            id="aiSentimentButton"
+            title="Analyze Sentiment"
+          >
+            📊 SENTIMENT
+          </button>
+          <div class="divider"></div>
+          <button class="tool-button" id="helpButton" title="Help (F1)">
+            ❓ HELP
+          </button>
+          <button
+            class="tool-button settings-button"
+            id="settingsButton"
+            title="Settings (Ctrl+,)"
+          >
+            ⚙️ SETTINGS
+          </button>
         </div>
 
-        <div class="ai-assistant">
-          <div class="section-header">
-            <h3 class="section-title">>>> AI NEURAL NET</h3>
-          </div>
-          <div class="sentiment-indicator">
-            <span class="sentiment-emoji" id="sentimentEmoji">🤖</span>
-            <span class="sentiment-label" id="sentimentLabel"
-              >ANALYZING TONE...</span
-            >
-          </div>
-          <div class="ai-suggestions" id="aiSuggestions">
-            <div class="ai-suggestion">💾 INITIALIZING STORY PROTOCOL...</div>
-            <div class="ai-suggestion">🔧 ENHANCE NARRATIVE STRUCTURE</div>
-            <div class="ai-suggestion">📡 ESTABLISH CHARACTER DIALOGUE</div>
-          </div>
+        <div class="editor-container">
+          <div
+            id="editor"
+            class="editor-area"
+            contenteditable="true"
+            spellcheck="false"
+            data-placeholder="Начните писать свою киберпанк историю здесь..."
+          ></div>
+        </div>
+
+        <div class="status-bar" id="statusBar">
+          <span class="status-item" id="wordCount">Слов: 0</span>
+          <span class="status-item" id="charCount">Символов: 0</span>
+          <span class="status-item" id="readTime">Время чтения: ~0 мин</span>
+          <span class="status-item" id="currentMood">Настроение: N/A</span>
+          <span class="status-item" id="connectionStatus">Подключение: ✅</span>
+          <span class="status-item" id="saveStatus">Сохранено</span>
         </div>
       </div>
     </div>
 
-    <div class="streak-indicator">
-      <span class="streak-fire">🔥</span>
-      <span class="streak-number" id="streakNumber">0</span>
-      <span class="streak-label">DAYS_STREAK</span>
-    </div>
-
-    <div class="modal" id="achievementModal">
+    <div class="modal-overlay" id="settingsModal">
       <div class="modal-content">
-        <div class="modal-icon">🏆</div>
-        <h2 class="modal-title">ACHIEVEMENT UNLOCKED</h2>
+        <div class="modal-header">
+          <h2>⚙️ SYSTEM_SETTINGS</h2>
+          <button class="close-button" onclick="closeModal('settingsModal')">
+            ✖️
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="setting-item">
+            <label for="autoSaveToggle">Автосохранение:</label>
+            <input type="checkbox" id="autoSaveToggle" checked />
+          </div>
+          <div class="setting-item">
+            <label for="notificationsToggle">Уведомления:</label>
+            <input type="checkbox" id="notificationsToggle" checked />
+          </div>
+          <div class="setting-item">
+            <label for="dailyWordTarget">Дневная цель слов:</label>
+            <input
+              type="number"
+              id="dailyWordTarget"
+              min="100"
+              step="100"
+              value="500"
+            />
+          </div>
+          <div class="setting-item">
+            <label for="difficultySelect">Сложность игры:</label>
+            <select id="difficultySelect">
+              <option value="easy">Легко</option>
+              <option value="normal">Нормально</option>
+              <option value="hard">Сложно</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="modal-button" onclick="saveSettings()">
+            СОХРАНИТЬ
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="loadingModal">
+      <div class="modal-content loading-content">
+        <div class="spinner"></div>
+        <p class="loading-message">LOADING INTERFACE...</p>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="errorModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="error-title">❌ ERROR</h2>
+          <button class="close-button" onclick="closeModal('errorModal')">
+            ✖️
+          </button>
+        </div>
+        <p class="modal-description" id="errorMessage"></p>
+        <button class="modal-button" onclick="closeModal('errorModal')">
+          ПОНЯТНО
+        </button>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>❓ HELP_PROTOCOLS</h2>
+          <button class="close-button" onclick="closeModal('helpModal')">
+            ✖️
+          </button>
+        </div>
+        <div class="modal-body" id="helpContent">
+          <h3>🎮 WriterQuest - Помощь</h3>
+          <h4>Горячие клавиши:</h4>
+          <ul>
+            <li><kbd>Ctrl+S</kbd> - Сохранить документ</li>
+            <li><kbd>Ctrl+O</kbd> - Открыть документ</li>
+            <li><kbd>Ctrl+N</kbd> - Новый документ</li>
+            <li><kbd>F1</kbd> - Показать помощь</li>
+          </ul>
+          <h4>Игровые функции:</h4>
+          <ul>
+            <li>Пишите текст, чтобы набирать опыт</li>
+            <li>Выполняйте квесты для получения бонусов</li>
+            <li>Разблокируйте достижения</li>
+            <li>Поддерживайте ежедневную серию</li>
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button class="modal-button" onclick="closeModal('helpModal')">
+            ЗАКРЫТЬ
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="achievementModal">
+      <div class="modal-content achievement-modal-content">
+        <div class="confetti-container" id="confettiContainer"></div>
+        <h2 class="modal-title">🏆 ACHIEVEMENT UNLOCKED</h2>
         <p class="modal-description" id="achievementDescription"></p>
         <div class="modal-rewards">
           <div class="reward-item">
@@ -181,15 +245,13 @@
             </div>
           </div>
         </div>
-        <button
-          class="modal-button"
-          onclick="window.WriterQuest.app.closeAchievementModal()"
-        >
+        <button class="modal-button" onclick="closeModal('achievementModal')">
           CONFIRM
         </button>
       </div>
     </div>
 
+    <!-- Загружаем все JS файлы в правильном порядке -->
     <script src="js/core/EventEmitter.js"></script>
     <script src="js/core/Command.js"></script>
     <script src="js/core/Strategy.js"></script>
@@ -206,12 +268,7 @@
     <script src="js/ui/StatusBar.js"></script>
     <script src="js/ui/UIManager.js"></script>
     <script src="js/ui/Modal.js"></script>
-
-    <script src="js/editor/Commands.js"></script>
-    <script src="js/editor/TextEditor.js"></script>
-
-    <script src="js/utils/Storage.js"></script>
-    <script src="js/utils/FileUtils.js"></script>
+    <script src="js/ui/Editor.js"></script>
 
     <script src="js/app.js"></script>
   </body>
