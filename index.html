@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/main.css" />
     <link rel="stylesheet" href="css/components.css" />
     <link rel="stylesheet" href="css/animations.css" />
+    <link rel="stylesheet" href="css/layout-fixes.css" />
   </head>
   <body>
     <div class="app-container">
@@ -71,35 +72,42 @@
           <button class="tool-button" id="redoButton" title="Redo (Ctrl+Y)">
             ↪️ REDO
           </button>
+
+          <div class="divider"></div>
+
           <button class="tool-button" id="saveButton" title="Save (Ctrl+S)">
             💾 SAVE
           </button>
           <button class="tool-button" id="loadButton" title="Load (Ctrl+O)">
             📂 LOAD
           </button>
+
           <div class="divider"></div>
+
           <button
-            class="tool-button"
+            class="tool-button ai-button"
             id="aiImproveButton"
             title="Improve Text (Ctrl+I)"
           >
             ✨ AI_IMPROVE
           </button>
           <button
-            class="tool-button"
+            class="tool-button ai-button"
             id="aiCompleteButton"
             title="Autocomplete (Ctrl+Space)"
           >
             🧠 AI_COMPLETE
           </button>
           <button
-            class="tool-button"
+            class="tool-button ai-button"
             id="aiSentimentButton"
             title="Analyze Sentiment"
           >
             📊 SENTIMENT
           </button>
+
           <div class="divider"></div>
+
           <button class="tool-button" id="helpButton" title="Help (F1)">
             ❓ HELP
           </button>
@@ -136,7 +144,7 @@
     <div class="modal-overlay" id="settingsModal">
       <div class="modal-content">
         <div class="modal-header">
-          <h2>⚙️ SYSTEM_SETTINGS</h2>
+          <h2 class="modal-title">⚙️ SYSTEM_SETTINGS</h2>
           <button class="close-button" onclick="closeModal('settingsModal')">
             ✖️
           </button>
@@ -164,7 +172,7 @@
             <label for="difficultySelect">Сложность игры:</label>
             <select id="difficultySelect">
               <option value="easy">Легко</option>
-              <option value="normal">Нормально</option>
+              <option value="normal" selected>Нормально</option>
               <option value="hard">Сложно</option>
             </select>
           </div>
@@ -187,41 +195,59 @@
     <div class="modal-overlay" id="errorModal">
       <div class="modal-content">
         <div class="modal-header">
-          <h2 class="error-title">❌ ERROR</h2>
+          <h2 class="modal-title error-title">❌ ERROR</h2>
           <button class="close-button" onclick="closeModal('errorModal')">
             ✖️
           </button>
         </div>
-        <p class="modal-description" id="errorMessage"></p>
-        <button class="modal-button" onclick="closeModal('errorModal')">
-          ПОНЯТНО
-        </button>
+        <div class="modal-body">
+          <p class="modal-description" id="errorMessage">Произошла ошибка</p>
+        </div>
+        <div class="modal-footer">
+          <button class="modal-button" onclick="closeModal('errorModal')">
+            ПОНЯТНО
+          </button>
+        </div>
       </div>
     </div>
 
     <div class="modal-overlay" id="helpModal">
       <div class="modal-content">
         <div class="modal-header">
-          <h2>❓ HELP_PROTOCOLS</h2>
+          <h2 class="modal-title">❓ HELP_PROTOCOLS</h2>
           <button class="close-button" onclick="closeModal('helpModal')">
             ✖️
           </button>
         </div>
         <div class="modal-body" id="helpContent">
           <h3>🎮 WriterQuest - Помощь</h3>
+
           <h4>Горячие клавиши:</h4>
           <ul>
             <li><kbd>Ctrl+S</kbd> - Сохранить документ</li>
             <li><kbd>Ctrl+O</kbd> - Открыть документ</li>
-            <li><kbd>Ctrl+N</kbd> - Новый документ</li>
+            <li><kbd>Ctrl+Z</kbd> - Отменить</li>
+            <li><kbd>Ctrl+Y</kbd> - Повторить</li>
+            <li><kbd>Ctrl+I</kbd> - AI улучшение</li>
+            <li><kbd>Ctrl+Space</kbd> - AI автодополнение</li>
             <li><kbd>F1</kbd> - Показать помощь</li>
+            <li><kbd>F11</kbd> - Полный экран</li>
           </ul>
+
           <h4>Игровые функции:</h4>
           <ul>
             <li>Пишите текст, чтобы набирать опыт</li>
             <li>Выполняйте квесты для получения бонусов</li>
             <li>Разблокируйте достижения</li>
             <li>Поддерживайте ежедневную серию</li>
+            <li>Используйте AI инструменты для улучшения текста</li>
+          </ul>
+
+          <h4>AI возможности:</h4>
+          <ul>
+            <li>AI_IMPROVE - улучшение выделенного текста</li>
+            <li>AI_COMPLETE - автодополнение на основе контекста</li>
+            <li>SENTIMENT - анализ эмоциональной окраски</li>
           </ul>
         </div>
         <div class="modal-footer">
@@ -236,7 +262,9 @@
       <div class="modal-content achievement-modal-content">
         <div class="confetti-container" id="confettiContainer"></div>
         <h2 class="modal-title">🏆 ACHIEVEMENT UNLOCKED</h2>
-        <p class="modal-description" id="achievementDescription"></p>
+        <p class="modal-description" id="achievementDescription">
+          Достижение разблокировано!
+        </p>
         <div class="modal-rewards">
           <div class="reward-item">
             <div class="reward-icon">⭐</div>
@@ -262,12 +290,13 @@
     <script src="js/ai/AutoComplete.js"></script>
     <script src="js/ai/TextImprover.js"></script>
     <script src="js/ai/SentimentAnalysis.js"></script>
+    <script src="js/ai/ConfigManager.js"></script>
 
+    <script src="js/ui/Modal.js"></script>
     <script src="js/ui/Toolbar.js"></script>
     <script src="js/ui/StatusBar.js"></script>
-    <script src="js/ui/UIManager.js"></script>
-    <script src="js/ui/Modal.js"></script>
     <script src="js/ui/Editor.js"></script>
+    <script src="js/ui/UIManager.js"></script>
 
     <script src="js/app.js"></script>
   </body>
